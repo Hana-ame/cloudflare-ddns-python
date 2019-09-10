@@ -7,11 +7,14 @@
     * 从域名服务商手中购买域名（如果你会请跳过）
     * 从Cloudflare的页面找到需要的内容（如果你会请跳过）
 ## 0.0 基本信息
-文件
+
+|文件名|概述|
+|---|---|
 |ddns.py|脚本本体，python3.6.4|
 |ddns.json|配置文件，放在同一目录下，不能缺失，文件名不能修改（特别是对使用exe来说）|
 |ddns.exe|使用pyinstaller生成的可执行文件，pyinstaller3.3.1，Windows-10-10.0.17763-SP0（兼容性大概会很糟糕）|
 
+exe在[release](https://github.com/Hana-ame/cloudflare-ddns-python/releases)的压缩包里
 
 ## 0.1 域名服务商的设置
   * 这一节的具体操作会根据你购买域名时选择的商家不同而不同
@@ -25,7 +28,9 @@
 
 ## 0.2 cloudflare的设置
   * 这一节的目的是从cloudflare的管理页面中得到需要的参数
- 
+
+|参数名|概述|
+|---|---|
 |name|自由设定，解析的名称，单纯的字符串对应二级域名，直接输入域名（例：example.com）以更新主域名|
 |Zone|cf给出，对应每一个域名的id|
 |Authorization|cf给出，授权|
