@@ -27,7 +27,7 @@ def gen_A(name="@",ip="127.0.0.1"):
         "ttl":1,
         "proxied":False
     }
-def gen_AAAA(name="@",ip="127.0.0.1"):
+def gen_AAAA(name="@",ip="::1"):
     return {
         "type":"AAAA",
         "name": name,
