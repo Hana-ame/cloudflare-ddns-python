@@ -68,7 +68,7 @@
 
 像这样子得到了Zone ID和API Token之后，就可以运行了
 
-    py .\example.py a.nmb.buzz   f5a5e86ea16a1abd12f43a9624ed7060   72UYVeU3dgxGnXPjRxCwIckkwGcHUQQtIHkT06cN
+    py .\example.py  example.com   f5a5e86ea16a1abd12f43a9624ed7060   72UYVeU3dgxGnXPjRxCwIckkwGcHUQQtIHkT06cN
 
 这里的步骤不包括购买域名和把域名挂到cloudflare上的步骤，不过这些比较容易找到，不再赘述
 
