@@ -21,6 +21,7 @@
 顺序应该是可以随便换，但是记得两个变量之间插入空格
 
 |变量名|含义|
+|---|---|
 |domain|使用的domain名称，形如example.com或a.example.com|
 |Zone ID|从Cloudflare中得到，代表这个域名|
 |token|从Cloudflare中得到，需要在页面中创建|
