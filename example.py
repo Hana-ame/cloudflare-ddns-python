@@ -40,16 +40,22 @@ print("域名为：\t",name)
 recordID = ''
 ip = None
 
+<<<<<<< HEAD
 i = 0
+=======
+>>>>>>> 0b00de043e5c95321cf3a37220a6d806008e7788
 while ip is None:
     ip = getip()
     if ip is not None:
         print("得到本机IP为 " + ip)
+<<<<<<< HEAD
     else: 
         i += 1
     if i > 5 :
         print("已经重试{}次，考虑网络是否正常".format(i))
     
+=======
+>>>>>>> 0b00de043e5c95321cf3a37220a6d806008e7788
 
 html = None
 while html is None:
