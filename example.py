@@ -42,7 +42,8 @@ ip = None
 
 while ip is None:
     ip = getip()
-    print("得到本机IP为 " + ip)
+    if ip is not None:
+        print("得到本机IP为 " + ip)
 
 html = None
 while html is None:
@@ -65,7 +66,7 @@ for i in j['result']:
 # 只留一条记录
 for i in id_list[1:]:
     result = None
-    while result is None:
+    while result is None:   
         print("尝试删除记录 " + i)
         result = ddns.cf.deleteRecorde(i)
 
@@ -92,10 +93,14 @@ else:
 
 while 1:    
     time.sleep(10)
-    if ip == getip():
+    nextip = getip()
+    if ip == nextip:
         print("ip未变动", ip)
         continue
-    ip = getip()
+    if nextip is None:
+        print("也许是网断了")    
+        continue
+    ip = nextip
     print('修改记录', name, ip, recordID)
     result = ddns.cf.updateRecord(ddns.getname(name),ip,recordID)
     
