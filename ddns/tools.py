@@ -22,6 +22,19 @@ def getIPv4():
     except:
         return None
 
+def get_local_ip():
+    # 创建一个 socket 对象
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # 连接到一个外部地址（不需要实际连接）
+        s.connect(("8.8.8.8", 80))
+        # 获取本机的 IP 地址
+        ip = s.getsockname()[0]
+    finally:
+        s.close()
+    
+    return ip
+
 def getIPv6():
     ipstr = None
     try:

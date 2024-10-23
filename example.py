@@ -10,7 +10,7 @@ ddns.cf.ZONE_ID = 'f5a5e86ea16a1abd12f43a9624ed7060'
 ddns.cf.TOKEN   = '72UYVeU3dgxGnXPjRxCwIckkwGcHUQQtIHkT06cN'
 
 name = 'example.com'
-getip = ddns.getIPv4
+getip = ddns.get_local_ip
 
 for arg in sys.argv:
     if arg[-3:] == '.py':
