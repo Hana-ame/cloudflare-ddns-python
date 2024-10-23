@@ -1,3 +1,7 @@
 __pycache__
 
+build
+dist
+example.spec
+
 renew.bat

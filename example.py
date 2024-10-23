@@ -1,38 +1,31 @@
 import ddns
 import json
 import time
-
-import sys
 import re
 
+import Tools
 
-ddns.cf.ZONE_ID = 'f5a5e86ea16a1abd12f43a9624ed7060'
-ddns.cf.TOKEN   = '72UYVeU3dgxGnXPjRxCwIckkwGcHUQQtIHkT06cN'
 
-name = 'example.com'
-getip = ddns.get_local_ip
+ddns.cf.ZONE_ID = 'your_zone_id'
+ddns.cf.TOKEN   = 'your_token'
 
-for arg in sys.argv:
-    if arg[-3:] == '.py':
-        continue
-    if arg == 'ipv6' or arg == 'IPv6' or arg == 'v6' or arg == '6':
-        getip = ddns.getIPv6
-        continue
-    if arg == 'ipv4' or arg == 'IPv4' or arg == 'v4' or arg == '4':
-        getip = ddns.getIPv4
-        continue
-    if re.findall(r'[0-9a-f]{32}', arg) != []:
-        ddns.cf.ZONE_ID = re.findall(r'[0-9a-f]{32}', arg)[0]
-        continue
-    if len(arg.split('.')) > 1:
-        name = arg
-    elif len(arg)>32:
-        ddns.cf.TOKEN = arg
+name = 'your.domain'
+def getip(method: str = 'local'):
+    f = {
+        'ipv6': ddns.getIPv6,
+        'ipv4': ddns.getIPv4,
+        'local': ddns.get_local_ip,
+    }
+    return (f.get(method) or ddns.get_local_ip)()
+method = 'local'
 
-if getip == ddns.getIPv4:
-    print("模式为：\tipv4")
-elif getip == ddns.getIPv6:
-    print("模式为：\tipv6")
+ddns.cf.ZONE_ID = Tools.parse_args(lambda x: re.findall(r'[0-9a-f]{32}', x) ) or ddns.cf.ZONE_ID
+ddns.cf.TOKEN = Tools.parse_args(lambda x: len(x) > 32) or ddns.cf.TOKEN
+name = Tools.parse_args(lambda x: (Tools.parse_endswith(x, ['.py', '.exe']) is None) and len(x.split('.')) > 1) or name
+method = Tools.parse_args(lambda x: x.lower() in ['ipv4', 'v4', '4'], lambda x:'ipv4') or method
+method = Tools.parse_args(lambda x: x.lower() in ['ipv6', 'v6', '6'], lambda x:'ipv6') or method
+
+print("模式为：\t"+method)
 print("ZONE_ID为：\t"+ ddns.cf.ZONE_ID)
 print("TOKEN为：\t",ddns.cf.TOKEN)
 print("域名为：\t",name)
@@ -42,7 +35,7 @@ ip = None
 
 i = 0
 while ip is None:
-    ip = getip()
+    ip = getip(method)
     if ip is not None:
         print("得到本机IP为 " + ip)
     else: 
@@ -99,7 +92,7 @@ else:
 
 while 1:    
     time.sleep(10)
-    nextip = getip()
+    nextip = getip(method)
     if ip == nextip:
         print("ip未变动", ip)
         continue
