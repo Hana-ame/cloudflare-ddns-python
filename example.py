@@ -18,17 +18,24 @@ def getip(method: str = 'local'):
     }
     return (f.get(method) or ddns.get_local_ip)()
 method = 'local'
+ttl = 1
 
 ddns.cf.ZONE_ID = Tools.parse_args(lambda x: re.findall(r'[0-9a-f]{32}', x) ) or ddns.cf.ZONE_ID
 ddns.cf.TOKEN = Tools.parse_args(lambda x: len(x) > 32) or ddns.cf.TOKEN
 name = Tools.parse_args(lambda x: (Tools.parse_endswith(x, ['.py', '.exe']) is None) and len(x.split('.')) > 1) or name
 method = Tools.parse_args(lambda x: x.lower() in ['ipv4', 'v4', '4'], lambda x:'ipv4') or method
 method = Tools.parse_args(lambda x: x.lower() in ['ipv6', 'v6', '6'], lambda x:'ipv6') or method
+try:
+    ttl = Tools.parse_args(lambda x: re.findall(r'^[1-9]\d+$', x), lambda x:int(x)) or ttl
+except Exception as e:
+    print(e)
+    pass
 
 print("模式为：\t"+method)
 print("ZONE_ID为：\t"+ ddns.cf.ZONE_ID)
 print("TOKEN为：\t",ddns.cf.TOKEN)
 print("域名为：\t",name)
+print("ttl：\t",ttl)
 
 recordID = ''
 ip = None
@@ -74,7 +81,7 @@ if len(id_list) == 0:
     result = None
     while result is None:
         print("尝试创建记录 " + name)
-        result = ddns.cf.createRecord(ddns.getname(name),ip)
+        result = ddns.cf.createRecord(ddns.getname(name),ip,ttl)
     j = json.loads(result)
     if j['success'] is not True:
         print('创建记录不成功，没写处理代码，请重新启动')
@@ -85,7 +92,7 @@ else:
     result = None
     while result is None:
         print('尝试修改记录', name, ip, recordID)
-        result = ddns.cf.updateRecord(ddns.getname(name),ip,recordID)
+        result = ddns.cf.updateRecord(ddns.getname(name),ip,recordID,ttl)
     j = json.loads(result)
     if j['success'] is not True:
         print('更新记录不成功，没写处理代码，请重新启动')
@@ -101,7 +108,7 @@ while 1:
         continue
     ip = nextip
     print('修改记录', name, ip, recordID)
-    result = ddns.cf.updateRecord(ddns.getname(name),ip,recordID)
+    result = ddns.cf.updateRecord(ddns.getname(name),ip,recordID,ttl)
     
 
 print('祝您身体健康，再见')
