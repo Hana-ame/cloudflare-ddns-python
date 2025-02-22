@@ -1,3 +1,8 @@
+# deepseek在上
+
+看[deepseek.py](deepseek.py)
+变量写到同文件夹`.env`里面，其实感觉不是很需要注释了，问AI吧。
+
 # 2021更新
 重写了一遍，修改了使用方式
 重做了cloudflare的教程
